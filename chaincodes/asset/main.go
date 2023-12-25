@@ -52,7 +52,8 @@ func (sc *SimpleContract) InitLedger(ctx contractapi.TransactionContextInterface
 
 func (sc *SimpleContract) Create(ctx contractapi.TransactionContextInterface, id, owner string, value int) (err error) {
 
-	if sc.exists(ctx, id) {
+	_, exists := sc.exists(ctx, id)
+	if !exists {
 		return fmt.Errorf("cannot create duplicate asset with id %s", id)
 	}
 
@@ -77,8 +78,8 @@ func (sc *SimpleContract) Create(ctx contractapi.TransactionContextInterface, id
 
 func (sc *SimpleContract) Query(ctx contractapi.TransactionContextInterface, id string) (asset *Asset, err error) {
 
-	assetJSON, err := ctx.GetStub().GetState(id)
-	if err != nil {
+	assetJSON, exists := sc.exists(ctx, id)
+	if !exists {
 		return
 	}
 
@@ -89,8 +90,8 @@ func (sc *SimpleContract) Query(ctx contractapi.TransactionContextInterface, id 
 
 func (sc *SimpleContract) Update(ctx contractapi.TransactionContextInterface, id, owner string) (err error) {
 
-	assetJSON, err := ctx.GetStub().GetState(id)
-	if err != nil {
+	assetJSON, exists := sc.exists(ctx, id)
+	if !exists {
 		return
 	}
 
@@ -119,8 +120,8 @@ func (sc *SimpleContract) Update(ctx contractapi.TransactionContextInterface, id
 
 func (sc *SimpleContract) Delete(ctx contractapi.TransactionContextInterface, id string) (err error) {
 
-	assetJSON, err := ctx.GetStub().GetState(id)
-	if err != nil {
+	assetJSON, exists := sc.exists(ctx, id)
+	if !exists {
 		return
 	}
 
@@ -148,11 +149,11 @@ func (sc *SimpleContract) Delete(ctx contractapi.TransactionContextInterface, id
 	return
 }
 
-func (sc *SimpleContract) exists(ctx contractapi.TransactionContextInterface, id string) (exists bool) {
+func (sc *SimpleContract) exists(ctx contractapi.TransactionContextInterface, id string) (assetJSON []byte, exists bool) {
 	assetJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
 		return
 	}
 
-	return assetJSON != nil
+	return assetJSON, assetJSON != nil
 }
