@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: backend
+  
+  frontend:
+    container_name: frontend
+  
+  nginx:
+    container_name: nginx
+  
+  org0.peer:
+    container_name: org0.peer
+    image: hyperledger/fabric-peer
+  
+  org0.ca:
+    container_name: org0.ca
+    image: hyperledger/fabric-ca
+
+  org1.peer:
+    container_name: org1.peer
+    image: hyperledger/fabric-peer
+
+  org1.ca:
+    container_name: org1.ca
+    image: hyperledger/fabric-ca
+
+  orderer:
+    container_name: orderer
+    image: hyperledger/fabric-orderer
