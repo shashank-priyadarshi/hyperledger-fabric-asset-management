@@ -43,3 +43,27 @@ To set up and run the Fabric Asset Transfer project, follow the instructions in 
 ## License
 
 This project is licensed under the [MIT License](./LICENSE).
+
+## Wallet
+
+
+### Generate an unencrypted private key :
+
+```
+openssl genpkey -algorithm RSA -out private_key.pem
+
+```
+
+### Generate a certificate signing request (CSR) without a passphrase :
+
+```
+openssl req -new -key private_key.pem -out certificate.csr
+
+```
+### Generate a self-signed certificate using the CSR:
+
+```
+
+openssl x509 -req -days 365 -in certificate.csr -signkey private_key.pem -out certificate.pem
+
+```
