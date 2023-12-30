@@ -37,7 +37,7 @@ To set up and run the Fabric Asset Transfer project, follow the instructions in 
 - Deploy the chaincode on the network.
 - Run the backend services.
 - Launch the frontend application.
-- Contribution
+- Contribution.
 - Contributions to the Fabric Asset Transfer project are welcome. If you'd like to contribute, please follow our [contribution guidelines](./CONTRIBUTE.md).
 
 ## License
